@@ -1,0 +1,114 @@
+{
+  "Service": {
+    "ServiceName": "WinPerfWatch",
+    "RunAsWindowsService": false
+  },
+
+  "ServerProfile": "RDS",
+
+  "Sampling": {
+    "IntervalSeconds": 5
+  },
+
+  "Sustained": {
+    "Samples": 6
+  },
+
+  "Ewma": {
+    "Alpha": 0.30
+  },
+
+  "Logging": {
+    "IncidentCooldownSeconds": 120,
+    "WritePeriodicSystemLine": true,
+    "PeriodicSystemLineEverySamples": 6
+  },
+
+  "Discovery": {
+    "EnableCounterDiscovery": true,
+    "LogDiscoveredCounters": true,
+    "CpuFallbackMinValidPercent": 0.5,
+    "DiskFallbackMinValidMBps": 0.05
+  },
+
+  "SqlDiscovery": {
+    "Enable": true,
+    "PreferredInstanceName": "MSSQLSERVER",
+    "LogDiscoveredCategories": false
+  },
+
+  "Thresholds": {
+    "CpuTotalHighPercentStart": 85.0,
+    "CpuTotalHighPercentEnd": 75.0,
+
+    "MemCommittedHighPercentStart": 90.0,
+    "MemCommittedHighPercentEnd": 85.0,
+    "PagingHighPercent": 20.0,
+
+    "DiskTotalHighMBpsStart": 120.0,
+    "DiskTotalHighMBpsEnd": 90.0,
+
+    "DiskAvgReadSecHighStart": 0.030,
+    "DiskAvgReadSecHighEnd": 0.020,
+    "DiskAvgWriteSecHighStart": 0.030,
+    "DiskAvgWriteSecHighEnd": 0.020,
+
+    "DiskQueueLenHighStart": 8.0,
+    "DiskQueueLenHighEnd": 6.0,
+
+    "DiskMode": "AnyOf"
+  },
+
+  "Attribution": {
+    "TopN": 10,
+
+    "MinCpuPercentToList": 1.0,
+    "MinIoMBpsToList": 1.0,
+    "MinRamMBToList": 200.0,
+
+    "IncludeOwner": true,
+    "IncludeCommandLine": true,
+    "IncludeSessionId": true,
+
+    "IncludeSessionUser": true,
+    "SessionUserFallbackToOwner": true,
+
+    "IncludeWindowsServices": true,
+
+    "DuringIncidentEverySeconds": 30,
+
+    "IdentityCacheTtlSeconds": 180,
+    "SessionCacheTtlSeconds": 120,
+    "ServiceCacheTtlSeconds": 300,
+
+    "MaxCommandLineLength": 600,
+    "MaxServicesToShow": 5
+  },
+
+  "Profiles": {
+    "RDS": {
+      "ExtraThresholds": {
+        "ProcessorQueueLengthHigh": 10,
+        "ContextSwitchesPerSecHigh": 60000
+      }
+    },
+    "FILE": {
+      "ExtraThresholds": {
+        "LanmanServerFilesOpenHigh": 2500,
+        "LanmanServerBytesTotalPerSecMBpsHigh": 300
+      }
+    },
+    "SQL": {
+      "ExtraThresholds": {
+        "SqlPageLifeExpectancyLow": 300,
+        "SqlBufferCacheHitRatioLow": 90
+      }
+    },
+    "DC": {
+      "ExtraThresholds": {
+        "ProcessorQueueLengthHigh": 10,
+        "ContextSwitchesPerSecHigh": 50000
+      }
+    }
+  }
+}
